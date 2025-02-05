@@ -1,0 +1,30 @@
+@function px-to-rem($px-value) {
+   @return calc($px-value / 16) * 1rem
+}
+
+.header {
+   border-bottom: 1px solid rgba(0, 0, 0, .1);
+   box-shadow: 0 0 5px 1px rgba(0, 0, 0, .1);
+   background-color: var(--bg-color-country);
+   transition: background-color 0.5s ease-in-out;
+}
+
+.header__wrapper {
+   max-width: px-to-rem(1400);
+   margin-inline: auto;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: px-to-rem(20);
+}
+
+.header__div {
+   display: flex;
+   align-items: center;
+   gap: px-to-rem(7);
+   cursor: pointer;
+}
+
+.header__title {
+   font-size: px-to-rem(24);
+}
