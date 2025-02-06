@@ -12,12 +12,15 @@ $White-Dark-Mode-Text-and-Light-Mode-Elements: hsl(0, 0%, 100%);
 
 
 :root {
+   --bg-color-header: white;
+   --bg-color-country: white;
    --bg-color: #{$Very-Light-Gray-Light-Mode-Background};   
    --color: black;
    --box-shadow: rgba(0, 0, 0, .1);
 }
 
 [data-theme="dark"] {
+   --bg-color-header: #{$Very-Dark-Blue-Dark-Mode-Background};
    --bg-color: #{$Very-Dark-Blue-Dark-Mode-Background};
    --bg-color-country: #{$Dark-Blue-Dark-Mode-Elements};
    --color: #{white};
@@ -60,7 +63,6 @@ body {
    height: px-to-rem(50);
    overflow: hidden;
    max-width: px-to-rem(500);
-   transition: background-color 0.5s ease, box-shadow 0.5s ease;
 }
 
 .search__icon {
@@ -80,7 +82,6 @@ body {
    font-size: px-to-rem(14);
    background-color: var(--bg-color);
    color: var(--color);
-   transition: color 0.5s ease-in-out;
 
    &::placeholder {
       color: var(--color);
@@ -121,7 +122,6 @@ body {
    margin-inline-start: px-to-rem(20);
    cursor: pointer;
    font-weight: 300;
-   transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease-in-out;
 }
 
 .custom-arrow {
@@ -129,11 +129,10 @@ body {
    display: block;
    background-color: var(--bg-color);
    top: 2px;
-   right: 4px;
+   right: 8px;
    height: 90%;
    width: px-to-rem(20);
    pointer-events: none;
-   transition: border-top-color 0.5s ease-in-out
 }
 
 .custom-arrow::after {
@@ -148,7 +147,6 @@ body {
    border-left: var(--size) solid transparent;
    border-right: var(--size) solid transparent;
    border-top: var(--size) solid var(--color);
-   transition: transform .4s ease-in-out;
 }
 
 .select__container:focus-within .custom-arrow::after {
@@ -172,6 +170,10 @@ body {
 
    .select__container {
       margin-inline-end: px-to-rem(50);
+   }
+
+   .custom-arrow {
+      right: 4px;
    }
 
 
