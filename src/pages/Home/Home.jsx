@@ -33,7 +33,6 @@ export default function Home() {
          key={country.numericCode}
          className="home-country-link"
          to={`country/${country.numericCode}`}
-         state={{ country }}
       >
          <Countries
             flag={country.flags.svg}
