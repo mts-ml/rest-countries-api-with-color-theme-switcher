@@ -73,22 +73,22 @@ export default function Country() {
         <h2 className="country__borders">Border Countries: </h2>
 
 
-        <div className="border__countries">          
+        <div className="border__countries">
           {country.borders?.map(borderCode => {
             const borderCountry = countries.find(c => c.alpha3Code === borderCode);
             if (!borderCountry) return null;
 
             return (
-            <Link
-            key={borderCountry}
-            to={`/country/${borderCountry?.numericCode}`}
-            className="border__country-link"
-            >
-              <button className="country__btn border" >
-                {borderCountry.name}
-              </button>
-            </Link>
-          )
+              <Link
+                key={borderCountry}
+                to={`/country/${borderCountry?.numericCode}`}
+                className="border__country-link"
+              >
+                <button className="country__btn border" >
+                  {borderCountry.name}
+                </button>
+              </Link>
+            )
           })}
         </div>
 
