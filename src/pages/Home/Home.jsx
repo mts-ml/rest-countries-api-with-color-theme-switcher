@@ -1,14 +1,34 @@
 import Countries from "../../components/Countries/Countries";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link, useOutletContext, useSearchParams } from "react-router-dom";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
+import { useRef } from "react";
 
 import './homeStyle.scss';
 
 
 export default function Home() {
-   const countries = useOutletContext(); 
+   const countries = useOutletContext();
 
-   const countriesArray = countries.map(country => (
+   const [searchParams, setSearchParams] = useSearchParams();
+
+   const selectRef = useRef(null);
+
+   const regionFilter = searchParams.get("region");
+
+   function handleRegionChange(event) {
+      const region = event.currentTarget.value.toLowerCase();
+      setSearchParams({ region });
+   }
+
+   function handleClearFilter() {
+      setSearchParams({});
+      selectRef.current.value = "";
+   }
+
+   const displayedCountries = regionFilter ?
+      countries.filter(country => country.region.toLowerCase() === regionFilter) : countries;
+
+   const countriesArray = displayedCountries.map(country => (
       <Link
          key={country.numericCode}
          className="home-country-link"
@@ -38,19 +58,28 @@ export default function Home() {
                   placeholder='Search for a country...' />
             </section>
 
-            <section className="select__container">
-               <select className="select">
-                  <option hidden>Filter by Region</option>
-                  <option value="Africa">Africa</option>
-                  <option value="America">America</option>
-                  <option value="Asia">Asia</option>
-                  <option value="Europe">Europe</option>
-                  <option value="Oceania">Oceania</option>
-               </select>
+            <div className="home__filter">
+               <section className="select__container">
+                  <select
+                     className="select"
+                     onChange={handleRegionChange}
+                     ref={selectRef}
+                  >
+                     <option value="" hidden>Filter by Region</option>
+                     <option value="Africa">Africa</option>
+                     <option value="Americas">Americas</option>
+                     <option value="Asia">Asia</option>
+                     <option value="Europe">Europe</option>
+                     <option value="Oceania">Oceania</option>
+                  </select>
 
-               <span className="custom-arrow"></span>
-            </section >
+                  <span className="custom-arrow"></span>
+               </section >
+
+               <button className={`clear-filter-btn ${regionFilter ? "btn-visible" : ""}`} onClick={handleClearFilter}>Clear filter</button>
+            </div>
          </div>
+
 
          <div className="countries__div">
             {countriesArray}
