@@ -1,6 +1,7 @@
 import { IoMoon as DarkMode } from "react-icons/io5"
 import { IoMoonOutline as LightMode } from "react-icons/io5";
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom';
 
 import './headerStyle.scss'
 
@@ -16,7 +17,9 @@ export default function Header(props) {
    return (
       <header className="header">
          <div className="header__wrapper">
-            <h1 className="header__title">Where in the world?</h1>
+            <Link className="link" to="/">
+               <h1 className="header__title">Where in the world?</h1>
+            </Link>
 
             <div
                onClick={props.handleTheme} className="header__div"
