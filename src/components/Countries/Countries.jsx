@@ -1,5 +1,6 @@
-import './countriesStyle.scss'
 import PropTypes from 'prop-types'
+
+import './countriesStyle.scss'
 
 
 export default function Countries(props) {
@@ -35,7 +36,7 @@ export default function Countries(props) {
             <div className="countries__country">
                <p className="countries__info">Capital:</p>
 
-               <span className="countries__span">{props.capital}</span>
+               <span className="countries__span">{props.capital || "No capital"}</span>
             </div>
          </div>
       </section>
