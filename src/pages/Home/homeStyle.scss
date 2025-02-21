@@ -68,7 +68,7 @@
 
 .clear-filter-btn {
    border: none;
-   background-color: #fff;
+   background-color: var(--bg-color);
    color: var(--color);
    border-radius: px-to-rem(5);
    margin-inline-end: px-to-rem(27);
@@ -104,7 +104,7 @@
    display: block;
    background-color: var(--bg-color);
    top: 2px;
-   right: 0;
+   right: 2px;
    height: 90%;
    width: px-to-rem(20);
    pointer-events: none;
