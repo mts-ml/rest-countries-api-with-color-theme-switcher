@@ -1,12 +1,18 @@
 // import PropTypes from 'prop-types/'
 import { FaArrowLeftLong as Arrow } from "react-icons/fa6";
-import { Link, useParams, useOutletContext } from 'react-router-dom';
+import { Link, useParams, useOutletContext, useLocation } from 'react-router-dom';
 
 import './countryStyle.scss'
 
 
 export default function Country() {
   const { id } = useParams();
+
+  const location = useLocation();
+
+  const queryParam = location.state?.queryParam || ""
+
+  const region = location.state?.region || "all"
 
   const countries = useOutletContext();
 
@@ -19,8 +25,8 @@ export default function Country() {
   return (
     <>
       <section className="country">
-        <Link className='link' to="/">
-          <button className='country__btn'><Arrow /> Back</button>
+        <Link className='link' to={`/?${queryParam}`}>
+          <button className='country__btn'><Arrow /> Back to {region} countries</button>
         </Link>
 
         <h1 className='country__name'>{country.name}</h1>
@@ -80,7 +86,7 @@ export default function Country() {
 
             return (
               <Link
-                key={borderCountry}
+                key={borderCountry.numericCode}
                 to={`/country/${borderCountry?.numericCode}`}
                 className="border__country-link"
               >
