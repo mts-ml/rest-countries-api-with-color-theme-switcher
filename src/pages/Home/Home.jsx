@@ -33,6 +33,10 @@ export default function Home() {
          key={country.numericCode}
          className="home-country-link"
          to={`country/${country.numericCode}`}
+         state={ {
+            queryParam: searchParams.toString(),
+            region: regionFilter
+         } }
       >
          <Countries
             flag={country.flags.svg}
@@ -63,6 +67,7 @@ export default function Home() {
                      className="select"
                      onChange={handleRegionChange}
                      ref={selectRef}
+                     value={regionFilter ? regionFilter.charAt(0).toUpperCase() + regionFilter.slice(1) : ""}
                   >
                      <option value="" hidden>Filter by Region</option>
                      <option value="Africa">Africa</option>
