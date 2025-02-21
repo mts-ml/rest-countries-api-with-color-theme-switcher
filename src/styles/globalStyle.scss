@@ -54,6 +54,13 @@ body {
    color: var(--color);
 }
 
+#loading {
+   position: absolute;
+   left: 50%;
+   top: 50%;
+}
+
+
 /* nunito-sans-300 - latin */
 @font-face {
    font-display: swap;
