@@ -1,17 +1,19 @@
 import Countries from "../../components/Countries/Countries";
 import { Link, useOutletContext, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 import { PiMagnifyingGlassLight } from "react-icons/pi";
-import { useRef } from "react";
+import { ThreeDots } from 'react-loader-spinner';
 
 import './homeStyle.scss';
 
 
 export default function Home() {
+
    const countries = useOutletContext();
 
    const [searchParams, setSearchParams] = useSearchParams();
 
-   const selectRef = useRef(null);
+   const [searchCountry, setSearchCountry] = useState("");
 
    const regionFilter = searchParams.get("region");
 
@@ -22,21 +24,25 @@ export default function Home() {
 
    function handleClearFilter() {
       setSearchParams({});
-      selectRef.current.value = "";
    }
 
-   const displayedCountries = regionFilter ?
-      countries.filter(country => country.region.toLowerCase() === regionFilter) : countries;
+   function handleSearchChange(event) {
+      setSearchCountry(event.currentTarget.value);
+   }
+
+   const displayedCountries = (regionFilter ?
+      countries.filter(country => country.region.toLowerCase() === regionFilter) : countries)
+      .filter(country => country.name.toLowerCase().includes(searchCountry.toLowerCase()));
 
    const countriesArray = displayedCountries.map(country => (
       <Link
          key={country.numericCode}
          className="home-country-link"
          to={`country/${country.numericCode}`}
-         state={ {
+         state={{
             queryParam: searchParams.toString(),
             region: regionFilter
-         } }
+         }}
       >
          <Countries
             flag={country.flags.svg}
@@ -46,48 +52,63 @@ export default function Home() {
             capital={country.capital}
          />
       </Link>
-   ))
+   ));
+
 
 
    return (
-      <>
-         <div className="wrapper">
-            <section className="search">
-               <PiMagnifyingGlassLight className='search__icon' size={24} />
+      countries.length > 0 ?
+         <>
+            <div className="wrapper">
+               <section className="search">
+                  <PiMagnifyingGlassLight className='search__icon' size={24} />
 
-               <input
-                  className='search__input'
-                  type="text"
-                  placeholder='Search for a country...' />
-            </section>
+                  <input
+                     className='search__input'
+                     type="text"
+                     placeholder='Search for a country...'
+                     value={searchCountry}
+                     onChange={handleSearchChange}
+                  />
+               </section>
 
-            <div className="home__filter">
-               <section className="select__container">
-                  <select
-                     className="select"
-                     onChange={handleRegionChange}
-                     ref={selectRef}
-                     value={regionFilter ? regionFilter.charAt(0).toUpperCase() + regionFilter.slice(1) : ""}
-                  >
-                     <option value="" hidden>Filter by Region</option>
-                     <option value="Africa">Africa</option>
-                     <option value="Americas">Americas</option>
-                     <option value="Asia">Asia</option>
-                     <option value="Europe">Europe</option>
-                     <option value="Oceania">Oceania</option>
-                  </select>
+               <div className="home__filter">
+                  <section className="select__container">
+                     <select
+                        className="select"
+                        onChange={handleRegionChange}
+                        value={regionFilter ? regionFilter.charAt(0).toUpperCase() + regionFilter.slice(1) : ""}
+                     >
+                        <option value="" hidden>Filter by Region</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Americas">Americas</option>
+                        <option value="Asia">Asia</option>
+                        <option value="Europe">Europe</option>
+                        <option value="Oceania">Oceania</option>
+                     </select>
 
-                  <span className="custom-arrow"></span>
-               </section >
+                     <span className="custom-arrow"></span>
+                  </section >
 
-               <button className={`clear-filter-btn ${regionFilter ? "btn-visible" : ""}`} onClick={handleClearFilter}>Clear filter</button>
+                  <button className={`clear-filter-btn ${regionFilter ? "btn-visible" : ""}`} onClick={handleClearFilter}>Clear filter</button>
+               </div>
             </div>
-         </div>
 
-
-         <div className="countries__div">
-            {countriesArray}
+            <div className="countries__div">
+               {countriesArray}
+            </div>
+         </>
+         :
+         <div id='loading'>
+            <span>Loading...</span>
+            <ThreeDots
+               visible={true}
+               height={80}
+               width={80}
+               color="rgb(80, 135, 167)"
+               radius="9"
+               ariaLabel="three-dots-loading"
+            />
          </div>
-      </>
-   )
+   );
 }
