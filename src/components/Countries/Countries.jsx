@@ -10,7 +10,7 @@ export default function Countries(props) {
       name: PropTypes.string.isRequired,
       population: PropTypes.number.isRequired,
       region: PropTypes.string.isRequired,
-      capital: PropTypes.string.isRequired,
+      capital: PropTypes.string,
    }
 
 
