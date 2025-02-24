@@ -16,7 +16,12 @@ export default function Countries(props) {
 
    return (
       <section className="countries">
-         <img src={props.flag} width={100} height={100} alt={`Flag of ${props.name}`} />
+         <img
+         src={props.flag}
+         width={100}
+         height={100}
+         alt={`Flag of ${props.name}`}
+         loading='lazy'/>
 
          <div className="countries__wrapper">
             <h2 className="countries__title">{props.name}</h2>
