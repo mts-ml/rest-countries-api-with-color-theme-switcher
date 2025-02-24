@@ -26,7 +26,7 @@ Users should be able to:
 
 ### Links
 
-- [Preview Site](https://your-live-site-url.com)
+- [Preview Site](https://all-countries-detail.netlify.app/)
 
 
 ### Built with
