@@ -1,19 +1,17 @@
 import { IoMoon as DarkMode } from "react-icons/io5"
 import { IoMoonOutline as LightMode } from "react-icons/io5";
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom';
 
 import './headerStyle.scss'
 
 
-Header.propTypes = {
-   darkMode: PropTypes.bool.isRequired,
-   handleTheme: PropTypes.func.isRequired,
+interface HeaderProps {
+   darkMode: boolean,
+   handleTheme: () => void,
 }
 
 
-export default function Header(props) {
-
+export default function Header(props: HeaderProps) {
    return (
       <header className="header">
          <div className="header__wrapper">
