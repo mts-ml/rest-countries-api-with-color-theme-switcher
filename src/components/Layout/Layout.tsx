@@ -7,12 +7,14 @@ import { CountryInterface } from "../../interface/CountryInterface";
 export const Layout: React.FC = () => {
    const [countries, setCountries] = useState<CountryInterface[]>([]);
 
+   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
    const [darkMode, setDarkMode] = useState<boolean>(() => {
       const savedTheme: string | null = localStorage.getItem("darkTheme");
-      
+
       return savedTheme !== null ? JSON.parse(savedTheme) as boolean : false
    })
-   
+
    useEffect(() => {
       async function fetchData(): Promise<void> {
          try {
@@ -20,12 +22,16 @@ export const Layout: React.FC = () => {
             const data: CountryInterface[] = await response.json();
             setCountries(data);
          } catch (error) {
-            console.log(`Erro: ${error}`);
+            if (error instanceof Error) {
+               setErrorMessage(error.message);
+            } else {
+               setErrorMessage("Unknown error loading countries.")
+            }
          }
       }
-      
+
       document.body.setAttribute("data-theme", darkMode ? "dark" : "");
-      
+
       // Saves on localStorage
       localStorage.setItem("darkTheme", JSON.stringify(darkMode));
 
@@ -42,6 +48,10 @@ export const Layout: React.FC = () => {
    return (
       <>
          <Header darkMode={darkMode} handleTheme={handleTheme} />
+
+         {errorMessage && <p style={{ margin: "30px" }}
+         >Error loading countries: <strong>{errorMessage}</strong>
+         </p>}
 
          <Outlet context={countries} />
       </>
