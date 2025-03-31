@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types/'
-import { FaArrowLeftLong as Arrow } from "react-icons/fa6";
 import { Link, useParams, useOutletContext, useLocation } from 'react-router-dom';
 import { CountryInterface } from "../../interface/CountryInterface";
+import { FaArrowLeftLong as Arrow } from "react-icons/fa6";
 
 import './countryStyle.scss'
 
@@ -36,93 +36,82 @@ export const Country: React.FC = () => {
 
 
   return (
-      <>
-        <div className="country__link-back">
-          <Link to={`/?${queryParam}`}>
-            <button className='country__btn'><Arrow /> Back to {region} countries</button>
-          </Link>
+    <>
+      <div className="country__link-back-div">
+        <Link to={`/?${queryParam}`}
+          className='country__link-back'
+        >
+          <Arrow aria-hidden="true" />
+          Back to {region} countries
+        </Link>
+      </div>
+
+      <section className="country" aria-live='polite'>
+        <img className="country__flag-img" src={country.flags.svg} alt={`Flag of ${country.name}`} />
+        <h1 className='country__name'>{country.name}</h1>
+
+        <div className="country-info">
+          <dl className="country__detail">
+            <dt className="country__info">Native Name:</dt>
+            <dd className="country__answer">{country.nativeName}</dd>
+
+            <dt className="country__info">Population:</dt>
+            <dd className="country__answer">{country.population.toLocaleString("en-US")}</dd>
+
+            <dt className="country__info">Region:</dt>
+            <dd className="country__answer">{country.region}</dd>
+
+            <dt className="country__info">Sub Region:</dt>
+            <dd className="country__answer">{country.subregion}</dd>
+
+            <dt className="country__info">Capital:</dt>
+            <dd className="country__answer">{country.capital || "No capital"}</dd>
+          </dl>
         </div>
 
-        <section className="country">
-          <img className="country__flag-img" src={country.flags.svg} alt={`Flag of ${country.name}`} />
+        <div className="country-detail2">
+          <dl className="country__detail">
+            <dt className='country__info tld'>Top Level Domain:</dt>
+            <dd className="country__answer tldd">{country.topLevelDomain}</dd>
 
-          <div className="country-info">
-            <div className="country__detail">
-              <h1 className='country__name'>{country.name}</h1>
+            <dt className='country__info'>Currencies:</dt>
+            <dd className="country__answer">
+              {country.currencies?.map(currency => currency.name).join(", ") || "N/A"}
+            </dd>
 
-              <div className="country__wrapper">
-                <p className='country__info'>Native Name: </p>
-                <span className="country__answer">{country.nativeName}</span>
-              </div>
+            <dt className='country__info'>Languages:</dt>
+            <dd className="country__answer">
+              {country.languages?.map(lang => lang.name).join(", ")}
+            </dd>
+          </dl>
+        </div>
+      </section >
 
-              <div className="country__wrapper">
-                <p className='country__info'>Population:</p>
-                <span className="country__answer">{country.population.toLocaleString("en-US")}</span>
-              </div>
+      <h2 className="country__borders-title">Border Countries:</h2>
 
-              <div className="country__wrapper">
-                <p className='country__info'>Region:</p>
-                <span className="country__answer">{country.region}</span>
-              </div>
+      <div className="border__countries">
+        {country.borders ? (
+          country.borders.map(borderCode => {
+            const borderCountry = countries.find(c => c.alpha3Code === borderCode);
+            if (!borderCountry) return null;
 
-              <div className="country__wrapper">
-                <p className='country__info'>Sub Region:</p>
-                <span className="country__answer">{country.subregion}</span>
-              </div>
-
-              <div className="country__wrapper">
-                <p className='country__info'>Capital:</p>
-                <span className="country__answer">{country.capital || "No capital"}</span>
-              </div>
-            </div>
-
-            <div className="country-info2">
-              <div className="country__wrapper">
-                <p className='country__info'>Top Level Domain:</p>
-                <span className="country__answer">{country.topLevelDomain}</span>
-              </div>
-
-              <div className="country__wrapper">
-                <p className='country__info'>Currencies:</p>
-                <span className="country__answer">
-                  {country.currencies?.map(currency => currency.name).join(", ") || "N/A"}
-                </span>
-              </div>
-
-              <div className="country__wrapper">
-                <p className='country__info'>Languages:</p>
-                <span className="country__answer">
-                  {country.languages?.map(lang => lang.name).join(", ")}
-                </span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <h2 className="country__borders-title">Border Countries: </h2>
-
-        <div className="border__countries">
-          {country.borders ? (
-            country.borders.map(borderCode => {
-              const borderCountry = countries.find(c => c.alpha3Code === borderCode);
-              if (!borderCountry) return null;
-
-              return (
+            return (
+              <div className="border__countries-div">
                 <Link
                   key={borderCountry.numericCode}
                   to={`/country/${borderCountry?.numericCode}`}
-                  className="border__country-link"
+                  className="border__countries-link"
+                  aria-label={`Border country: ${borderCountry.name}, visit details.`}
                 >
-                  <button className="country__btn border" >
-                    {borderCountry.name}
-                  </button>
+                  {borderCountry.name}
                 </Link>
-              )
-            })
-          ) : (
-            <p>This country does not share borders with any other country.</p>
-          )}
-        </div>
-      </>
+              </div>
+            )
+          })
+        ) : (
+          <p>This country does not share borders with any other country.</p>
+        )}
+      </div>
+    </>
   )
 }

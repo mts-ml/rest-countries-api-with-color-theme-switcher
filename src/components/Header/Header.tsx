@@ -19,26 +19,25 @@ export default function Header(props: HeaderProps) {
                <h1 className="header__title">Where in the world?</h1>
             </Link>
 
-            <div
-               onClick={props.handleTheme} className="header__div"
-               tabIndex={0}
-               aria-label="Change Theme"
-            >
-               {props.darkMode ?
-                  (
-                     <>
-                        <LightMode size={18} />
-                        <span>Light Mode</span>
-                     </>
-                  ) : (
-                     <>
-                        <DarkMode size={18} />
-                        <span>Dark Mode</span>
-                     </>
-                  )}
-
-
-            </div>
+            {props.darkMode ?
+               <button
+                  type="button"
+                  className="header__theme-btn"
+                  onClick={props.handleTheme}
+               >
+                  <LightMode size={20} />
+                  <span>Light Mode</span>
+               </button>
+               :
+               <button
+                  type="button"
+                  className="header__theme-btn"
+                  onClick={props.handleTheme}
+               >
+                  <DarkMode size={20} />
+                  <span>Dark Mode</span>
+               </button>
+            }
          </div>
       </header>
    )

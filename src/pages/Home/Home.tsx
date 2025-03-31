@@ -9,7 +9,6 @@ import './homeStyle.scss';
 
 
 export const Home: React.FC = () => {
-
    const countries: CountryInterface[] = useOutletContext();
 
    const [searchParams, setSearchParams] = useSearchParams();
@@ -64,8 +63,15 @@ export const Home: React.FC = () => {
                <section className="search">
                   <PiMagnifyingGlassLight className='search__icon' size={24} />
 
+                  <label
+                     className="sr-only"
+                     htmlFor="searchCountry"
+                  >
+                     Search for a country
+                  </label>
                   <input
                      className='search__input'
+                     id="searchCountry"
                      type="text"
                      placeholder='Search for a country...'
                      value={searchCountry}
@@ -96,9 +102,9 @@ export const Home: React.FC = () => {
                </div>
             </div>
 
-            <div className="countries__div">
+            <main className="countries__main">
                {countriesArray}
-            </div>
+            </main>
          </>
          :
          <div id='loading'>
